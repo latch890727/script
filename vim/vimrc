@@ -1,0 +1,117 @@
+syntax enable
+syntax on
+
+let mapleader = ";"
+
+" set encoding=utf-8
+
+" color scheme
+set  background=dark
+colorscheme evening
+
+" cursor shine
+set gcr=a:block-blinkon0
+
+" not show scroll
+set guioptions-=l
+set guioptions-=L
+set guioptions-=r
+set guioptions-=R
+
+" not show menu and toolbar
+set guioptions-=m
+set guioptions-=T
+
+set laststatus=2
+set ruler
+
+" show number
+set number
+set relativenumber
+
+" highlight current line and column
+set cursorline
+set cursorcolumn
+
+" highlight search terms
+set hlsearch
+
+" no wrap
+set nowrap 
+
+set tabstop=2 " a tab is 2 spaces
+set autoindent 
+set copyindent "copy previous indentation on autoindenting
+set shiftwidth=2 " number of spaces to use for autoindenting
+set showmatch " set show matching parenthesis
+set ignorecase " ignore case when searching
+set smartcase " ignore case if search pattern is all lowercase, case-sensitive
+set smarttab " insert tabs on the start of a line according to shiftwidth, not
+set nobackup
+set noswapfile
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+if has('python3')
+endif
+
+call plug#begin('~/.vim/plug')
+
+"--------------- plugins--------------------------------------------
+" plugins from git repo
+Plug 'Valloric/YouCompleteMe'
+Plug 'mhinz/vim-signify'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'iamcco/markdown-preview.vim'
+Plug 'Shougo/unite.vim'      
+Plug 'Shougo/vimfiler.vim'   
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'majutsushi/tagbar'     
+Plug 'sbdchd/neoformat'
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'neomake/neomake'
+Plug 'jiangmiao/auto-pairs'
+Plug 'fatih/vim-go'
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-fugitive'
+
+" color schemes
+Plug 'tomasr/molokai'
+Plug 'flazz/vim-colorschemes'
+
+call plug#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" ---------------------Plugin-specific Settings----------------
+" VimFiler
+let g:vimfiler_as_default_explorer = 1
+
+" airline
+" let g:airline_theme='molokai'
+
+" fullscreen and shortcut
+fun! ToggleFullscreen()
+       call system("wmctrl -ir " . v:windowid . " -b toggle, fullscreen")
+endf
+map <silent> <F11> :call ToggleFullscreen()<CR>
+" auto fullscreen when start
+autocmd VimEnter * call ToggleFullscreen()
+
+" ---------------------nerdtree-------------------------------
+" Start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+
+" --------------------------map key--------------------------
+
+" quickly edit/reload the vimrc filv
+nmap  <leader>ev :e $HOME/project/self/script/vim/vimrc<CR>
+nmap  <leader>sv :so $HOME/project/self/script/vim/vimrc<CR>
